@@ -32,7 +32,7 @@ Some CDMA networks have limited support for multipart SMS messages.  This can oc
 
 # Passwords
 
-When using HTTP Basic Auth with gateway, all characters in the password must be chosen from the [ISO-8859-1](https://en.wikipedia.org/wiki/ISO/IEC_8859-1) characterset, excluding `#`, `/`, `?`, `@`.
+When using HTTP Basic Auth with gateway, all characters in the password must be chosen from the [ISO-8859-1](https://en.wikipedia.org/wiki/ISO/IEC_8859-1) character set, excluding `#`, `/`, `?`, `@`.
 
 # API
 
@@ -218,7 +218,7 @@ Since Android 6.0 (marshmallow), permissions for sending and receiving SMS must 
 
 ## Copyright
 
-Copyright 2013-2021 CHT Gateway - Medic Mobile, Inc. <hello@medicmobile.org>
+Copyright 2013-2021 CHT Gateway - Medic Mobile, Inc. <hello@medicmobile.org>  
 Copyright 2022 SMS Gateway - SysCo systemes de communication sa <info@multiotp.net>
 
 ## License
