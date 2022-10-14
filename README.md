@@ -1,54 +1,31 @@
-`CHT Gateway App`
+`SMS Gateway App`
 ===============
 
-[![cht-gateway build](https://github.com/medic/cht-gateway/actions/workflows/build.yml/badge.svg)](https://github.com/medic/cht-gateway/actions/workflows/build.yml)
-
-Download APKs from: https://github.com/medic/cht-gateway/releases
+Install App from Google Play: [SMS Gateway](https://play.google.com/store/apps/details?id=ch.sysco.multiotp.smsgateway)
 
 -----
 
-An SMS gateway for Android.  Send and receive SMS from your webapp via an Android phone.
+An SMS gateway for Android, based on CHT Gateway App from Medic. Send and receive SMS from your webapp via an Android phone.
 
-	+--------+                 +-----------+
-	|  web   |                 |  cht-     | <-------- SMS
-	| server | <---- HTTP ---- |  gateway  |
-	|        |                 | (android) | --------> SMS
-	+--------+                 +-----------+
+	+--------+                 +------------+
+	|  web   |                 | smsgateway | <-------- SMS
+	| server | <---- HTTP ---- | (android)  |
+	|        |                 |            | --------> SMS
+	+--------+                 +------------+
 
 # Use
 
 ## Installation
 
-Install the latest APK from https://github.com/medic/cht-gateway/releases
+Install App from Google Play: [SMS Gateway](https://play.google.com/store/apps/details?id=ch.sysco.multiotp.smsgateway)
 
 ## Configuration
 
-### CHT
-
-If you're configuring `cht-gateway` for use with hosted [`CHT-Core`](https://github.com/medic/cht-core), with a URL of e.g. `https://myproject.dev.medicmobile.org` and a username of `gateway` and a password of `topSecret`, fill in the settings as follows:
-
-#### Medic-branded gateway
-
-Please note that in the medic-branded build, the username is hard-coded as `gateway`, and cannot be changed.
-
-```
-Instance name: myproject [dev]
-Password: topSecret
-```
-
-#### Generic-branded gateway
-
-```
-WebappUrl: https://gateway:topSecret@myproject.some-subdomain.medicmobile.org/api/sms
-```
-
-### Other
-
-If you're configuring `cht-gateway` for use with other services, you will need to use the _generic_ build of `cht-gateway`, and find out the value for _CHT URL_ from your tech support.
+Set the URL of your SMS Gateway URL. You can create an SMS Gateway using the open source [SMSGateway PHP class](https://github.com/multiOTP/SMSGateway).
 
 ### CDMA Compatibility Mode
 
-Some CDMA networks have limited support for multipart SMS messages.  This can occur within the same network, or only when sending SMS from a GSM network to a CDMA network.  Check this box if `cht-gateway` is running on a GSM network and:
+Some CDMA networks have limited support for multipart SMS messages.  This can occur within the same network, or only when sending SMS from a GSM network to a CDMA network.  Check this box if `smsgateway` is running on a GSM network and:
 
 * multipart messages sent to CDMA phones never arrive; or
 * multipart messages sent to CDMA phones are truncated
@@ -59,7 +36,7 @@ When using HTTP Basic Auth with gateway, all characters in the password must be 
 
 # API
 
-This is the API specification for communications between `cht-gateway` and a web server.  Messages in both directions are `application/json`.
+This is the API specification for communications between `smsgateway` and a web server.  Messages in both directions are `application/json`.
 
 Where a list of values is expected but there are no values provided, it is acceptable to:
 
@@ -67,30 +44,30 @@ Where a list of values is expected but there are no values provided, it is accep
 * provide an empty array (`[]`); or
 * omit the field completely
 
-Bar array behaviour specified above, `cht-gateway` _must_ include fields specified in this document, and the web server _must_ include all expected fields in its responses.  Either party _may_ include extra fields as they see fit.
+Bar array behaviour specified above, `smsgateway` _must_ include fields specified in this document, and the web server _must_ include all expected fields in its responses.  Either party _may_ include extra fields as they see fit.
 
 ## Idempotence
 
-N.B. messages are considered duplicate by `cht-gateway` if they have identical values for `id`.  The webapp is expected to do the same.
+N.B. messages are considered duplicate by `smsgateway` if they have identical values for `id`.  The webapp is expected to do the same.
 
-`cht-gateway` will not re-process duplicate webapp-originating messages.
+`smsgateway` will not re-process duplicate webapp-originating messages.
 
-`cht-gateway` may forward a webapp-terminating message to the webapp multiple times.
+`smsgateway` may forward a webapp-terminating message to the webapp multiple times.
 
-`cht-gateway` may forward a delivery status report to the webapp multiple times for the same message.  This should indicate a change of state, but duplicate delivery reports may be delivered in some circumstances, including:
+`smsgateway` may forward a delivery status report to the webapp multiple times for the same message.  This should indicate a change of state, but duplicate delivery reports may be delivered in some circumstances, including:
 
 * the phone receives multiple delivery status reports from the mobile network for the same message
-* `cht-gateway` failed to process the webapp's response when the delivery report was last forwarded from `cht-gateway` to webapp
+* `smsgateway` failed to process the webapp's response when the delivery report was last forwarded from `smsgateway` to webapp
 
 ## Authorisation
 
-`cht-gateway` supports [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication).  Just include the username and password for your web endpoint when configuring `cht-gateway`, e.g.:
+`smsgateway` supports [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication).  Just include the username and password for your web endpoint when configuring `smsgateway`, e.g.:
 
-	https://username:password@example.com/cht-gateway-api-endpoint
+	https://username:password@example.com/smsgateway-api-endpoint
 
 ## Messages
 
-The entire API should be implemented by a webapp at a single endpoint, e.g. https://exmaple.com/cht-gateway-api-endpoint
+The entire API should be implemented by a webapp at a single endpoint, e.g. https://1-2-3-4-5-6.net/smsgateway/
 
 ### GET
 
@@ -102,7 +79,7 @@ Expected response:
 
 ### POST
 
-`cht-gateway` will accept and process any relevant data received in a response.  However, it may choose to only send certain types of information in a particular request (e.g. only provide a webapp-terminating SMS), and will also poll the web service periodically for webapp-originating messages, even if it has no new data to pass to the web service.
+`smsgateway` will accept and process any relevant data received in a response.  However, it may choose to only send certain types of information in a particular request (e.g. only provide a webapp-terminating SMS), and will also poll the web service periodically for webapp-originating messages, even if it has no new data to pass to the web service.
 
 ### Request
 
@@ -125,7 +102,7 @@ Requests and responses may be sent with `Content-Encoding` set to `gzip`.
 	{
 		"messages": [
 			{
-				"id": <String: uuid, generated by `cht-gateway`>,
+				"id": <String: uuid, generated by `smsgateway`>,
 				"from": <String: international phone number>,
 				"content": <String: message content>,
 				"sms_sent": <long: ms since unix epoch that message was sent>,
@@ -159,7 +136,7 @@ FAILED | The delivery has failed and will not be retried
 ##### HTTP Status: `2xx`
 
 Clients may respond with any status code in the `200`-`299` range, as they feel is
-appropriate.  `cht-gateway` will treat all of these statuses the same.
+appropriate.  `smsgateway` will treat all of these statuses the same.
 
 ##### Content
 
@@ -178,14 +155,14 @@ appropriate.  `cht-gateway` will treat all of these statuses the same.
 
 Response codes of `400` and above will be treated as errors.
 
-If the response's `Content-Type` header is set to `application/json`, `cht-gateway` will attempt to parse the body as JSON.  The following structure is expected:
+If the response's `Content-Type` header is set to `application/json`, `smsgateway` will attempt to parse the body as JSON.  The following structure is expected:
 
 	{
 		"error": true,
 		"message": <String: error message>
 	}
 
-The `message` property may be logged and/or displayed to users in the `cht-gateway` UI.
+The `message` property may be logged and/or displayed to users in the `smsgateway` UI.
 
 #### Other response codes
 
@@ -208,97 +185,6 @@ Gateway will retry to send the SMS when any of these errors occurs: `RESULT_ERRO
 3. At this point the user has the option of manually select the SMS and press `Retry` button.
     3.1 If they do and SMS fails again, then the process will restart from step # 1.
 
-# Development
-
-## Requirements
-
-Development guides are available in the "Android" section of the [Community Health Toolkit Docs Site](https://docs.communityhealthtoolkit.org/core/guides/android/). You will find instructions of how to setup your development environment, build and test new features, how to work with "flavor" apps, release, publish... and so on.
-
-### `demo-server`
-
-* npm
-
-## Building locally
-
-More details of how to setup and build the app [here](https://docs.communityhealthtoolkit.org/core/guides/android/development-setup/). The following are the most common tasks:
-
-### Build and install
-
-To build locally and install to an attached android device:
-
-	make
-
-### Tests
-
-To run unit tests and static analysis tools locally:
-
-	make test
-
-To run end to end tests, first either connect a physical device, or start an emulated android device, and then:
-
-    make test-ui
-
-End to end tests only run in devices with Android _4.4 - 9.0_. Also it's possible that at the end of the tests when the SDK tries to uninstall the app from the device the following error is shown:
-
-```
-com.android.build.gradle.internal.testing.ConnectedDevice > runTests[4034G - 6.0] FAILED 
-        com.android.builder.testing.api.DeviceException: com.android.ddmlib.InstallException: INSTALL_FAILED_VERSION_DOWNGRADE
-```
-
-Don't worry about that, it means the tests ran OK, but the SDK failed to remove the app for compatibility issues with your device, but this error only happens with the tests.
-
-## `demo-server`
-
-There is a demonstration implementation of a server included for `cht-gateway` to communicate with.  You can add messages to this server, and query it to see the interactions that it has with `cht-gateway`.
-
-### Local
-
-To start the demo server locally:
-
-	make demo-server
-
-To list the data stored on the server:
-
-	curl http://localhost:8000
-
-To make the next good request to `/app` return an error:
-
-	curl --data '"Something failed!"' http://localhost:8000/error
-
-To add a webapp-originating message (to be send by `cht-gateway`):
-
-	curl -vvv --data '{ "id": "3E105262-070C-4913-949B-E7ACA4F42B71", "to": "+447123555888", "content": "hi" }' http://localhost:8000
-
-To simulate a request from `cht-gateway`:
-
-	curl http://localhost:8000/app -H "Accept: application/json" -H "Accept-Charset: utf-8" -H "Accept-Encoding: gzip" -H "Cache-Control: no-cache" -H "Content-Type: application/json" --data '{}'
-
-To clear the data stored on the server:
-
-	curl -X DELETE http://localhost:8000
-
-To set a username and password on the demo server:
-
-	curl --data '{"username":"alice", "password":"secret"}' http://localhost:8000/auth
-
-### Remote
-
-It's simple to deploy the demo server to remote NodeJS hosts.
-
-#### Heroku
-
-TODO walkthrough
-
-#### Modulus
-
-TODO walkthrough
-
-## Releasing
-
-1. Create a git tag for the version, eg: `v1.7.4`.
-2. Push the tag to the repo and GitHub Actions will build and publish the apk to GitHub.
-3. Announce the release on the [CHT forum](https://forum.communityhealthtoolkit.org), under the "Product - Releases" category.
-
 # Android Version Support
 
 ## "Default SMS/Messaging app"
@@ -312,7 +198,7 @@ Some reading on this can be found at:
 * http://android-developers.blogspot.com.es/2013/10/getting-your-sms-apps-ready-for-kitkat.html
 * https://www.addhen.org/blog/2014/02/15/android-4-4-api-changes/
 
-Adding support for kitkat® means that there is some extra code in `cht-gateway` whose purpose is not obvious:
+Adding support for kitkat® means that there is some extra code in `smsgateway` whose purpose is not obvious:
 
 ### Non-existent activities in `AndroidManifest.xml`
 
@@ -320,11 +206,11 @@ Activities `HeadlessSmsSendService` and `ComposeSmsActivity` are declared in `An
 
 ### Unwanted permissions
 
-The `BROADCAST_WAP_PUSH` permission is requested in `AndroidManifest.xml`, and an extra `BroadcastReceiver`, `MmsIntentProcessor` is declared.  When `cht-gateway` is the default messaging app on a device, incoming MMS messages will be ignored.  Actual WAP Push messages are probably ignored too.
+The `BROADCAST_WAP_PUSH` permission is requested in `AndroidManifest.xml`, and an extra `BroadcastReceiver`, `MmsIntentProcessor` is declared.  When `smsgateway` is the default messaging app on a device, incoming MMS messages will be ignored.  Actual WAP Push messages are probably ignored too.
 
 ### Extra intents
 
-To support being the default messaging app, `cht-gateway` listens for `SMS_DELIVER` as well as `SMS_RECEIVED`.  If the default SMS app, we need to ignore `SMS_RECEIVED`.
+To support being the default messaging app, `smsgateway` listens for `SMS_DELIVER` as well as `SMS_RECEIVED`.  If the default SMS app, we need to ignore `SMS_RECEIVED`.
 
 ## Runtime Permissions
 
@@ -332,7 +218,8 @@ Since Android 6.0 (marshmallow), permissions for sending and receiving SMS must 
 
 ## Copyright
 
-Copyright 2013-2021 Medic Mobile, Inc. <hello@medicmobile.org>
+Copyright 2013-2021 CHT Gateway - Medic Mobile, Inc. <hello@medicmobile.org>
+Copyright 2022 SMS Gateway - SysCo systemes de communication sa <info@multiotp.net>
 
 ## License
 
