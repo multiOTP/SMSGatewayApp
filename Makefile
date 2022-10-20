@@ -2,7 +2,7 @@ ADB = ${ANDROID_HOME}/platform-tools/adb
 EMULATOR = ${ANDROID_HOME}/tools/emulator
 GRADLE = ./gradlew
 GRADLE_OPTS = --daemon --parallel
-flavor = Generic
+flavor = Medic
 flavor_lower = $(shell echo ${flavor} | tr '[:upper:]' '[:lower:]')
 
 ifdef ComSpec	 # Windows
@@ -16,11 +16,11 @@ endif
 .PHONY: all assemble-all assemble-release deploy-all uninstall-all
 
 default:
-	@ADB='${ADB}' ./scripts/build_and_maybe_deploy
+	@ADB='${ADB}' ./scripts/assemble_and_maybe_deploy
 all: clean assemble-all deploy-all
 
 force: assemble uninstall
-	adb install -r build/outputs/apk/${flavor_lower}/debug/smsgateway-${flavor_lower}-debug.apk
+	adb install -r build/outputs/apk/${flavor_lower}/debug/cht-gateway-SNAPSHOT-${flavor_lower}-debug.apk
 
 assemble:
 	${GRADLE} ${GRADLE_OPTS} assemble${flavor}Debug
@@ -59,10 +59,9 @@ deploy-all: assemble-all
 		xargs -n1 ${ADB} install -r
 
 uninstall:
-	adb uninstall ch.sysco.multiotp.smsgateway.medic
-  
+	adb uninstall medic.gateway.alert
 uninstall-all: uninstall
-	adb uninstall ch.sysco.multiotp.smsgateway
+	adb uninstall medic.gateway.alert.generic
 
 kill:
 	pkill -9 emulator64-arm

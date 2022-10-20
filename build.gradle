@@ -36,18 +36,6 @@ repositories {
 	google()
 }
 
-def getVersionCode = {
-  int versionCode =   1008002
-  if (versionCode > 2100000000 / 10)
-    throw new RuntimeException('versionCode bigger than max allowed by Google Play.')
-
-  return versionCode
-}
-
-def getVersionName = {
-  '1.8.2'
-}
-
 def excludeKxml2 = {
 	// This transitive dependency is excluded from some direct dependencies to prevent
 	// "Program type already present: org.xmlpull.v1.XmlSerializer" when running
@@ -84,6 +72,18 @@ dependencies {
 	coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 }
 
+def getVersionCode = {
+  int versionCode =   1008002
+  if (versionCode > 2100000000 / 10)
+    throw new RuntimeException('versionCode bigger than max allowed by Google Play.')
+
+  return versionCode
+}
+
+def getVersionName = {
+  '1.8.2'
+}
+
 android {
 	compileSdkVersion 30
 	buildToolsVersion '30.0.3'
@@ -95,7 +95,7 @@ android {
 
 	defaultConfig {
 		minSdkVersion 16
-		targetSdkVersion 31	// 30+ causes instrumentation tests to fail when uninstalling the app from the device
+		targetSdkVersion 29	// 30+ causes instrumentation tests to fail when uninstalling the app from the device
 
 		versionCode getVersionCode()
 		versionName getVersionName()
@@ -114,7 +114,7 @@ android {
   }
 
 	applicationVariants.all {
-		buildConfigField "String", "LOG_TAG", '"SMSGateway"'
+		buildConfigField "String", "LOG_TAG", '"CHTGateway"'
 		buildConfigField "boolean", "DISABLE_APP_URL_VALIDATION", "Boolean.parseBoolean(\"${System.env.DISABLE_APP_URL_VALIDATION}\")"
 
 		buildConfigField "boolean", "CI", "Boolean.parseBoolean(\"${System.env.CI}\")"
@@ -189,12 +189,12 @@ android {
 	flavorDimensions 'brand'
 	productFlavors {
 		generic {
-			applicationId = 'ch.sysco.multiotp.smsgateway'
+			applicationId = 'medic.gateway.alert.generic'
 			buildConfigField "boolean", "IS_GENERIC_FLAVOUR", "true"
 			buildConfigField "boolean", "IS_MEDIC_FLAVOUR", "false"
 		}
 		medic {
-			applicationId = 'ch.sysco.multiotp.smsgateway.medic'
+			applicationId = 'medic.gateway.alert'
 			buildConfigField "boolean", "IS_GENERIC_FLAVOUR", "false"
 			buildConfigField "boolean", "IS_MEDIC_FLAVOUR", "true"
 		}

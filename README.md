@@ -17,7 +17,7 @@ An SMS gateway for Android, based on CHT Gateway App from Medic. Send and receiv
 
 ## Installation
 
-Install App from Google Play: [SMS Gateway](https://play.google.com/store/apps/details?id=ch.sysco.multiotp.smsgateway)
+Install App using the latest APK file available: [SMS Gateway](https://github.com/multiOTP/SMSGatewayApp/releases/latest)
 
 ## Configuration
 
@@ -186,6 +186,22 @@ Gateway will retry to send the SMS when any of these errors occurs: `RESULT_ERRO
     3.1 If they do and SMS fails again, then the process will restart from step # 1.
 
 # Android Version Support
+
+## Android specific parameters
+
+Using adb shell, you should change these two parameters:
+- sms_outgoing_check_max_count
+- sms_outgoing_check_interval_ms
+
+Example for a limit of 200 messages per minute:
+
+```
+adb shell
+settings put global sms_outgoing_check_max_count 200
+settings put global sms_outgoing_check_interval_ms 60000
+```
+
+You need to reboot your Android phone. after these changes
 
 ## "Default SMS/Messaging app"
 
