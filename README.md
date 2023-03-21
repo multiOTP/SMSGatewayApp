@@ -1,7 +1,7 @@
 `SMS Gateway App`
 ===============
 
-Install App using the latest APK file available: [SMS Gateway](https://github.com/medic/cht-gateway/releases/latest)
+Install App using the latest APK file available: [SMS Gateway](https://github.com/medic/cht-gateway/releases/download/1.8.2/medic-gateway-1.8.2-generic-release.apk)
 
 -----
 
@@ -17,7 +17,7 @@ An SMS gateway for Android, based on CHT Gateway App from Medic. Send and receiv
 
 ## Installation
 
-Install App using the latest APK file available: [SMS Gateway](https://github.com/medic/cht-gateway/releases/latest)
+Install App using the latest APK file available: [SMS Gateway](https://github.com/medic/cht-gateway/releases/download/1.8.2/medic-gateway-1.8.2-generic-release.apk)
 
 ## Configuration
 
