@@ -1,7 +1,7 @@
 `SMS Gateway App`
 ===============
 
-Install App from Google Play: [SMS Gateway](https://play.google.com/store/apps/details?id=ch.sysco.multiotp.smsgateway)
+Install App using the latest APK file available: [SMS Gateway](https://github.com/medic/cht-gateway/releases/latest)
 
 -----
 
@@ -17,7 +17,7 @@ An SMS gateway for Android, based on CHT Gateway App from Medic. Send and receiv
 
 ## Installation
 
-Install App using the latest APK file available: [SMS Gateway](https://github.com/multiOTP/SMSGatewayApp/releases/latest)
+Install App using the latest APK file available: [SMS Gateway](https://github.com/medic/cht-gateway/releases/latest)
 
 ## Configuration
 
